@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Student Portfolio | Academic & Career</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind to use CSS Variables and enable class-based theme switching -->
+    <script>
+        tailwind.config = {
+            // We use the 'light' class on the HTML tag to denote light mode
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    // Define colors using CSS variables
+                    colors: {
+                        'primary': 'var(--color-primary)',
+                        'secondary': 'var(--color-secondary)',
+                        'accent': 'var(--color-accent)',
+                        'accent-dark': 'var(--color-accent-dark)',
+                        'text-default': 'var(--color-text-default)',
+                        'text-muted': 'var(--color-text-muted)',
+                        'border-color': 'var(--color-border)',
+                        // Specific colors needed for non-swapping elements
+                        'success-bg': '#15803d', 
+                        'success-text': '#d1fae5',
+                        'error-bg': '#b91c1c',
+                        'error-text': '#fee2e2',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- CSS VARIABLE DEFINITIONS --- */
+        /* Dark Mode Defaults (applies to :root when .light is not present) */
+        :root {
+            --color-primary: #111827; /* Deep Dark Blue/Gray (Page BG) */
+            --color-secondary: #1f2937; /* Slightly Lighter Dark (Card BG) */
+            --color-text-default: #f9fafb; /* Light Gray (Main Text) */
+            --color-text-muted: #9ca3af; /* Gray 400 (Muted Text) */
+            --color-accent: #06b6d4; /* Cyan 500 */
+            --color-accent-dark: #0891b2; /* Cyan 600 */
+            --color-border: #374151; /* Gray 700 */
+            --shadow-accent-color: rgba(6, 182, 212, 0.2);
+        }
+
+        /* Light Mode Overrides (applies when .light class is on the <html> tag) */
+        .light {
+            --color-primary: #ffffff; /* White (Page BG) */
+            --color-secondary: #f3f4f6; /* Light Gray (Card BG) */
+            --color-text-default: #1f2937; /* Dark Gray (Main Text) */
+            --color-text-muted: #6b7280; /* Medium Gray (Muted Text) */
+            --color-border: #e5e7eb; /* Gray 200 */
+            --shadow-accent-color: rgba(6, 182, 212, 0.4);
+        }
+
+        /* --- Custom Styles --- */
+        
+        /* Apply variables to the body */
+        body {
+            background-color: var(--color-primary);
+            color: var(--color-text-default);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Custom scrollbar for aesthetics on dark theme */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--color-secondary); }
+        ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
+        html { scroll-behavior: smooth; }
+
+        .accordion-icon { transition: transform 0.3s ease; }
+        .rotated { transform: rotate(180deg); }
+        /* Adjusted shadow to use variable color */
+        .shadow-accent { box-shadow: 0 4px 15px -1px var(--shadow-accent-color), 0 2px 5px -2px rgba(6, 182, 212, 0.1); }
+    </style>
+</head>
+<!-- Initial body class ensures dark mode styles are applied before JS loads -->
+<body class="antialiased">
+
+    <!-- Header / Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-primary/95 backdrop-blur-sm shadow-2xl border-b border-accent/20 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo/Name -->
+            <a href="#home" class="text-2xl font-bold tracking-tight text-text-default">
+                MICHAEL OBENG BOATENG <span class="text-accent">IT.</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#home" class="text-text-muted hover:text-accent transition duration-300 font-medium">Home</a>
+                <a href="#academic" class="text-text-muted hover:text-accent transition duration-300 font-medium">Academic Work</a>
+                <a href="#about" class="text-text-muted hover:text-accent transition duration-300 font-medium">About Me</a>
+                <a href="#contact" class="text-text-muted hover:text-accent transition duration-300 font-medium">Contact</a>
+                <!-- Theme Toggle Button (Desktop) -->
+                <button id="theme-toggle-desktop" aria-label="Toggle theme" class="p-2 rounded-full text-accent hover:bg-accent/10 transition duration-300 focus:outline-none focus:ring-2 focus:ring-accent">
+                    <!-- Icon placeholder will be set by JS on load -->
+                    <svg id="theme-icon-desktop" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a6.997 6.997 0 01-5.88 5.88A9 9 0 0012 3z"></path></svg>
+                </button>
+            </nav>
+
+            <!-- Mobile Menu and Toggle Button Group -->
+            <div class="flex items-center space-x-4 md:hidden">
+                 <!-- Theme Toggle Button (Mobile) -->
+                <button id="theme-toggle-mobile" aria-label="Toggle theme" class="p-2 rounded-full text-accent hover:bg-accent/10 transition duration-300 focus:outline-none focus:ring-2 focus:ring-accent">
+                    <svg id="theme-icon-mobile" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a6.997 6.997 0 01-5.88 5.88A9 9 0 0012 3z"></path></svg>
+                </button>
+                 <!-- Mobile Menu Button (Hamburger) -->
+                <button id="mobile-menu-button" class="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-accent">
+                    <svg class="w-6 h-6 text-text-default" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden absolute w-full bg-secondary shadow-xl transition-colors duration-300">
+            <nav class="flex flex-col space-y-2 p-4 border-t border-border-color">
+                <a href="#home" class="block py-2 px-3 text-text-default hover:bg-accent/10 rounded-lg transition duration-200">Home</a>
+                <a href="#academic" class="block py-2 px-3 text-text-default hover:bg-accent/10 rounded-lg transition duration-200">Academic Work</a>
+                <a href="#about" class="block py-2 px-3 text-text-default hover:bg-accent/10 rounded-lg transition duration-200">About Me</a>
+                <a href="#contact" class="block py-2 px-3 text-text-default hover:bg-accent/10 rounded-lg transition duration-200">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative py-24 sm:py-32 flex items-center justify-center text-center p-4 bg-secondary border-b border-accent/20 transition-colors duration-300">
+            <div class="z-10 max-w-5xl">
+                <h1 class="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight text-text-default">
+                    Structured Development & <span class="text-accent">Digital Innovation.</span>
+                </h1>
+                <p class="text-lg sm:text-xl text-text-muted mb-8 max-w-3xl mx-auto">
+                    A comprehensive, project-based portfolio from NHL Stenden's Information Technology program.
+                </p>
+                <a href="#academic" class="inline-block px-8 py-3 bg-accent text-primary font-semibold rounded-lg shadow-accent hover:bg-accent-dark transition duration-300 transform hover:scale-[1.02]">
+                    Explore My IT Journey
+                </a>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-primary transition-colors duration-300">
+            <div class="container mx-auto max-w-5xl flex flex-col lg:flex-row items-center gap-12">
+                <!-- Profile Image -->
+                <div class="flex-shrink-0 w-full lg:w-1/3">
+                    <!-- Note: The image URL provided by the user is a placeholder in this environment. -->
+                    <img src="img/profile pic.jpeg" alt="Student Profile Picture" 
+                         class="w-full h-auto max-w-xs mx-auto rounded-full shadow-2xl object-cover border-4 border-accent p-1">
+                </div>
+
+                <!-- About Content -->
+                <div class="lg:w-2/3 text-text-default">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-accent">About Michael Obeng Boateng</h2>
+                    <p class="text-lg text-text-muted mb-3">
+                        I am a dedicated student in **Information Technology** at **NHL Stenden** in **Emmen, Netherlands**, starting my studies in the 2025-2026 academic year.
+                    </p>
+                    <p class="text-lg text-text-muted mb-6">
+                        I focus on building practical, scalable solutions using modern development tools and methodologies, including **version control (GitHub)** and **containerization (Docker)**. This portfolio serves as my digital record of academic achievement and hands-on project experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <!-- GitHub Link (Updated to personal profile) -->
+                        <a href="https://github.com/Michael-xumi" target="_blank" class="text-accent hover:text-accent-dark font-semibold flex items-center transition duration-300">
+                            <!-- GitHub Icon (Inline SVG) -->
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.042-.015-2.046-3.334.723-4.04-1.606-4.04-1.606-.546-1.387-1.334-1.756-1.334-1.756-1.087-.745.084-.73.084-.73 1.205.085 1.838 1.838 1.238 1.07 1.833 2.81 1.303 3.492.996.108-.775.419-1.303.76-1.602-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.125-.304-.535-1.523.117-3.176 0 0 1.008-.32 3.303 1.23a11.517 11.517 0 016 0c2.295-1.55 3.303-1.23 3.303-1.23.652 1.653.242 2.872.117 3.176.767.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.62-5.475 5.92-.41.357-.78.96-.78 1.936 0 1.39.01 2.51.015 2.85.004.32.227.69.83.57C20.563 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                            GitHub Profile (Michael-xumi)
+                        </a>
+                        <!-- LinkedIn Link -->
+                        <a href="#" class="text-accent hover:text-accent-dark font-semibold flex items-center transition duration-300">
+                            <!-- LinkedIn Icon (Inline SVG) -->
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.32-.477-2.222-1.657-2.222-1.218 0-1.94 1.01-1.94 2.222v5.569H9.722v-5.569c0-1.32-.477-2.222-1.657-2.222-1.218 0-1.94 1.01-1.94 2.222v5.569H2.57v-8.994h3.552v1.542h.05c.49-.933 1.685-1.905 3.864-1.905 2.766 0 4.88 1.815 4.88 5.717v5.63h3.553v-6.38c0-3.41-2.146-5.263-4.997-5.263-2.378 0-3.874 1.278-4.52 2.457h-.048v-2.074h-3.553v8.993zM5.55 3.75c-1.157 0-1.942.78-1.942 1.775 0 .996.785 1.775 1.942 1.775 1.157 0 1.942-.78 1.942-1.775 0-.995-.785-1.775-1.942-1.775z"/></svg>
+                            LinkedIn Profile Link
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Academic Portfolio Section (Collapsible Structure) -->
+        <section id="academic" class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary border-t border-accent/30 transition-colors duration-300">
+            <div class="container mx-auto max-w-5xl">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12 text-accent">Academic Work Timeline</h2>
+
+                <!-- Portfolio Content Container -->
+                <div id="portfolio-container" class="space-y-6">
+
+                    <!-- YEAR 1 -->
+                    <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300">
+                        <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-1">
+                            <span>Year 1: IT Fundamentals - NHL Stenden (2025-2026)</span>
+                            <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="year-1" class="year-content hidden p-5 pt-0">
+                            <div class="space-y-4 border-l-4 border-accent pl-6">
+                                
+                                <!-- Period 1: Detailed Breakdown (8 Weeks - Web Development) -->
+                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-1">
+                                        Period 1: Web Development Basics (HTML, CSS, PHP, Figma)
+                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="period-1" class="period-content hidden mt-3 space-y-2">
+                                        <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                            **Project Focus:** Full design and initial development of the **Sunny Socks** e-commerce website. Weeks 1-5 link to individual assignments, while Weeks 6-8 link to the shared **Team Project Repository** on GitHub.
+                                        </p>
+                                        <ul class="list-none space-y-2 text-text-default">
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 1: HTML Layout & Figma Analysis</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Website Layout. Project: Analysis Board.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-1-HTML-Layout-Analysis-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Artifact)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 2: Responsive CSS & Figma Design Start</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox. Project: Figma Design (Phase 1).</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-2-Responsive-CSS-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View CSS)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 3: Simple Website Construction</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Simple Website. Project: Figma Design (Phase 2).</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-3-Simple-Website-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(View Pages)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 4: Advanced CSS Techniques</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox (Review). Project: Figma Design (Phase 3).</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-4-Advanced-CSS-Components" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Components)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 5: Forms & PHP Integration</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Creating Forms. Project: Figma Design (Final Mockup).</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-5-Forms-and-PHP-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View PHP Files)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                <span class="font-bold text-accent">Week 6: PROJECT MILESTONE 1 (Coding in VS Code)</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Project: Client Website Implementation. (Check Group GitHub)</span>
+                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent font-bold text-sm" data-filetype="zip">(Team GitHub Repo)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                <span class="font-bold text-accent">Week 7: PHP/JS Implementation</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Project: Website Backend & Interactivity. (Check Group GitHub)</span>
+                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Team GitHub Link)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
+                                                <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Presentation</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Project: **Sunny Socks** Final Delivery and Presentation.</span>
+                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL TEAM PROJECT)</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Period 2: Detailed Breakdown (8 Weeks - Database Management) -->
+                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-2">
+                                        Period 2: Database Management (MySQL, SQL, Proxmox)
+                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="period-2" class="period-content hidden mt-3 space-y-2">
+                                        <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                            **Project Focus:** Mastering **Relational Database Management** using **MySQL**, administration via **phpMyAdmin**, and creating robust server environments using **Proxmox** Virtual Machines.
+                                        </p>
+                                        <ul class="list-none space-y-2 text-text-default">
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 1: MySQL & Environment Setup</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Setting up a MySQL VM using Proxmox.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-1-MySQL-Setup" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Config)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 2: Data Modeling & Normalization</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Designing Conceptual and Logical ER-Diagrams.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-2-ER-Diagram" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View ERD)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 3: SQL Data Definition Language (DDL)</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Creating tables, constraints, and indexes.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-3-DDL-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(View SQL)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                <span class="font-bold text-accent">Week 4: PROJECT MILESTONE 2 (Schema Review)</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Project: Finalized Database Schema and Normalization Report.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-4-Schema-Report" target="_blank" class="text-accent font-bold text-sm" data-filetype="doc">(Report Link)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 5: SQL Data Manipulation Language (DML)</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Writing complex SELECT queries (JOINs, subqueries).</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-5-DML-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(SQL Script 2)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 6: Integrating CRUD Operations (PHP/JS)</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Connecting the Sunny Socks project to the MySQL backend.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-6-Integration-Code" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(Integration Code)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
+                                                <span class="font-medium">Week 7: Database Security & Maintenance</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Assignment: User privilege management via phpMyAdmin and backups.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-7-Security-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Security Report)</a>
+                                            </li>
+                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
+                                                <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Report</span> 
+                                                <span class="text-sm text-text-muted hidden md:block">Project: Full Database Implementation and Administrative Documentation.</span>
+                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL PROJECT)</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <!-- Other Codes & Tools Section -->
+                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-codes">
+                                        Tools & Version Control (GitHub, Docker, VS Code)
+                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="period-codes" class="period-content hidden mt-3 space-y-3">
+                                        <p class="text-text-muted font-medium">This section documents proficiency in critical development tools used across all periods.</p>
+                                        <ul class="list-disc list-inside space-y-2 text-text-muted ml-4">
+                                            <li class="text-text-default"><span class="font-bold text-accent">GitHub Usage (Individual Project):</span> Commits, branches, and merges for the individual assignments. <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME" target="_blank" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="link">(Go to Individual Assignments Repo)</a></li>
+                                            <li class="text-text-default"><span class="font-bold text-accent">GitHub Usage (Group Project):</span> Link to the collaborative repository. <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="link">(Go to Sunny Socks Team Repo)</a></li>
+                                            <li class="text-text-default"><span class="font-bold text-accent">Docker:</span> Setup and management of development environments. <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Dockerfile" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="yml">(View Dockerfile)</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- YEAR 2 (Placeholder) -->
+                    <div class="bg-primary rounded-xl shadow-accent border border-accent/20 transition-colors duration-300">
+                        <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-2">
+                            <span>Year 2: Intermediate Studies (Placeholder)</span>
+                            <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="year-2" class="year-content hidden p-5 pt-0">
+                            <p class="text-text-muted italic">Content for Year 2 will appear here.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-primary border-t border-accent/20 transition-colors duration-300">
+            <div class="container mx-auto max-w-3xl">
+                <h2 class="text-3xl sm:text-4xl font-bold text-center mb-4 text-accent">Get In Touch</h2>
+                <p class="text-lg text-center text-text-muted mb-12">
+                    I am open to discussions about internships, projects, and academic feedback.
+                </p>
+
+                <!-- Simple Contact Form (Non-functional without a backend) -->
+                <form action="#" method="POST" class="space-y-6 bg-secondary p-8 rounded-xl shadow-2xl border border-border-color transition-colors duration-300">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-text-default mb-1">Name</label>
+                        <input type="text" id="name" name="name" required
+                               class="w-full px-4 py-3 bg-primary border border-border-color rounded-lg focus:ring-accent focus:border-accent outline-none transition duration-200 text-text-default">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-text-default mb-1">Email</label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full px-4 py-3 bg-primary border border-border-color rounded-lg focus:ring-accent focus:border-accent outline-none transition duration-200 text-text-default">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-text-default mb-1">Message</label>
+                        <textarea id="message" name="message" rows="5" required
+                                  class="w-full px-4 py-3 bg-primary border border-border-color rounded-lg focus:ring-accent focus:border-accent outline-none transition duration-200 text-text-default"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full px-6 py-3 bg-accent text-primary font-semibold rounded-lg shadow-md hover:bg-accent-dark transition duration-300 transform hover:scale-[1.01]">
+                            Send Message
+                        </button>
+                    </div>
+                    <div id="status-message" class="hidden p-3 rounded-lg text-center text-sm font-medium"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary border-t border-border-color mt-8 py-8 px-4 transition-colors duration-300">
+        <div class="container mx-auto text-center text-text-muted text-sm">
+            <p>&copy; 2025 MICHAEL OBENG BOATENG Academic Portfolio. Developed with dedication at NHL Stenden.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        const htmlElement = document.documentElement;
+        const toggleButtons = document.querySelectorAll('#theme-toggle-desktop, #theme-toggle-mobile');
+        const iconIds = ['theme-icon-desktop', 'theme-icon-mobile'];
+
+        const sunIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 7V3h1v4h-1zM5.63 5.63l.71.71L6.34 7.07 7.05 7.78 6.34 7.07 5.63 6.36 4.92 5.65zM12 21v-4h1v4h-1zM5.63 18.37l.71-.71.71.71.71.71-1.42 1.42zM21 12h-4v1h4v-1zM3 12h4v1H3v-1zM18.37 5.63l-.71-.71-.71.71-.71.71 1.42 1.42zM12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg>';
+        const moonIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a6.997 6.997 0 01-5.88 5.88A9 9 0 0012 3z"></path></svg>';
+        
+        // Function to set the icons based on the current theme
+        const setIcons = (isLight) => {
+            iconIds.forEach(id => {
+                const iconElement = document.getElementById(id);
+                if (iconElement) {
+                    iconElement.innerHTML = isLight ? moonIcon : sunIcon;
+                }
+            });
+        };
+
+        // Function to apply the theme
+        const applyTheme = (isLight) => {
+            if (isLight) {
+                htmlElement.classList.add('light');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.remove('light');
+                localStorage.setItem('theme', 'dark');
+            }
+            setIcons(isLight);
+        };
+
+        // Initialize theme on page load
+        const initializeTheme = () => {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+            
+            let isLightMode = false;
+
+            if (savedTheme) {
+                isLightMode = savedTheme === 'light';
+            } else {
+                // Default is dark mode, so only set light if system prefers it
+                isLightMode = prefersLight;
+            }
+            applyTheme(isLightMode);
+        };
+
+        // Toggle handler
+        const toggleTheme = () => {
+            const isLight = htmlElement.classList.contains('light');
+            applyTheme(!isLight);
+        };
+
+        // Add listeners to both desktop and mobile buttons
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', toggleTheme);
+        });
+
+        // Run initialization
+        initializeTheme();
+
+        // --- Mobile Menu Toggle ---
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // --- Academic Portfolio Accordion Logic ---
+        document.querySelectorAll('.year-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                const icon = button.querySelector('.accordion-icon');
+
+                // Toggle visibility and rotation
+                targetContent.classList.toggle('hidden');
+                icon.classList.toggle('rotated');
+            });
+        });
+
+        document.querySelectorAll('.period-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                const icon = button.querySelector('.accordion-icon');
+                
+                // Toggle visibility and rotation
+                targetContent.classList.toggle('hidden');
+                icon.classList.toggle('rotated');
+            });
+        });
+
+
+        // --- Simple Form Submission Handler (Non-functional without a backend) ---
+        const contactForm = document.querySelector('#contact form');
+        const statusMessage = document.getElementById('status-message');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous styles and set processing message
+            statusMessage.textContent = 'Sending message...';
+            statusMessage.classList.remove('hidden', 'success-bg', 'success-text', 'error-bg', 'error-text');
+            statusMessage.classList.add('bg-secondary', 'text-accent');
+
+            setTimeout(() => {
+                // Simulate success
+                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+                statusMessage.classList.remove('bg-secondary', 'text-accent');
+                statusMessage.classList.add('success-bg', 'text-success-text');
+                
+                contactForm.reset();
+
+                setTimeout(() => {
+                    statusMessage.classList.add('hidden');
+                }, 5000);
+
+            }, 1500); 
+        });
+    </script>
+</body>
+</html>
