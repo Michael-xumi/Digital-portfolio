@@ -73,12 +73,61 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--color-secondary); }
         ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
-        html { scroll-behavior: smooth; }
 
         .accordion-icon { transition: transform 0.3s ease; }
         .rotated { transform: rotate(180deg); }
         /* Adjusted shadow to use variable color */
         .shadow-accent { box-shadow: 0 4px 15px -1px var(--shadow-accent-color), 0 2px 5px -2px rgba(6, 182, 212, 0.1); }
+        
+        /* Smooth animations for accordion (year, semester, and period levels) */
+        .year-content, .semester-content, .period-content {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            overflow: hidden;
+            /* The 'hidden' Tailwind class in HTML provides the initial display: none; */
+            /* max-height and opacity will be controlled by JS */
+            max-height: 0; 
+            opacity: 0;
+        }
+
+        /* Link hover effects and filetype icons */
+        a[data-filetype]::before {
+            content: "📄 ";
+            opacity: 0.7;
+            margin-right: 0.25rem;
+        }
+        a[data-filetype="pdf"]::before { content: "📑 "; }
+        a[data-filetype="sql"]::before { content: "🗄️ "; }
+        a[data-filetype="zip"]::before { content: "📦 "; }
+        a[data-filetype="xlsx"]::before { content: "📊 "; }
+        a[data-filetype="link"]::before { content: "🔗 "; }
+        a[data-filetype="doc"]::before { content: "📝 "; }
+        a[data-filetype="yml"]::before { content: "⚙️ "; }
+        
+        /* Improved card hover effects */
+        .period-toggle:hover {
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.05), transparent);
+        }
+        
+        /* Hero section gradient background */
+        #home {
+            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+        }
+        
+        /* Skill badge styling */
+        .skill-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin: 0.25rem;
+            background: var(--color-accent);
+            color: var(--color-primary);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .skill-badge:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <!-- Initial body class ensures dark mode styles are applied before JS loads -->
@@ -198,120 +247,194 @@
                             <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="year-1" class="year-content hidden p-5 pt-0">
-                            <div class="space-y-4 border-l-4 border-accent pl-6">
+                            <div class="space-y-6 border-l-4 border-accent pl-6">
                                 
-                                <!-- Period 1: Detailed Breakdown (8 Weeks - Web Development) -->
-                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
-                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-1">
-                                        Period 1: Web Development Basics (HTML, CSS, PHP, Figma)
-                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <!-- Semester 1 Container Start -->
+                                <div class="bg-secondary/50 rounded-lg shadow-md border border-accent/50">
+                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-default hover:text-accent transition duration-300" data-target="semester-1">
+                                        <span>Semester 1: Foundation Modules (Periods 1 & 2)</span>
+                                        <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </button>
-                                    <div id="period-1" class="period-content hidden mt-3 space-y-2">
-                                        <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
-                                            **Project Focus:** Full design and initial development of the **Sunny Socks** e-commerce website. Weeks 1-5 link to individual assignments, while Weeks 6-8 link to the shared **Team Project Repository** on GitHub.
-                                        </p>
-                                        <ul class="list-none space-y-2 text-text-default">
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 1: HTML Layout & Figma Analysis</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Website Layout. Project: Analysis Board.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-1-HTML-Layout-Analysis-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Artifact)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 2: Responsive CSS & Figma Design Start</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox. Project: Figma Design (Phase 1).</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-2-Responsive-CSS-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View CSS)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 3: Simple Website Construction</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Simple Website. Project: Figma Design (Phase 2).</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-3-Simple-Website-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(View Pages)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 4: Advanced CSS Techniques</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox (Review). Project: Figma Design (Phase 3).</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-4-Advanced-CSS-Components" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Components)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 5: Forms & PHP Integration</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Creating Forms. Project: Figma Design (Final Mockup).</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-5-Forms-and-PHP-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View PHP Files)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
-                                                <span class="font-bold text-accent">Week 6: PROJECT MILESTONE 1 (Coding in VS Code)</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Project: Client Website Implementation. (Check Group GitHub)</span>
-                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent font-bold text-sm" data-filetype="zip">(Team GitHub Repo)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
-                                                <span class="font-bold text-accent">Week 7: PHP/JS Implementation</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Project: Website Backend & Interactivity. (Check Group GitHub)</span>
-                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Team GitHub Link)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
-                                                <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Presentation</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Project: **Sunny Socks** Final Delivery and Presentation.</span>
-                                                <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL TEAM PROJECT)</a>
-                                            </li>
-                                        </ul>
+                                    <div id="semester-1" class="semester-content hidden p-4 pt-0 space-y-4">
+                                        
+                                        <!-- Period 1: Web Development Basics (8 Weeks) -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-1">
+                                                Period 1: Web Development Basics (HTML, CSS, PHP, Figma)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="period-1" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Full design and initial development of the **Sunny Socks** e-commerce website. Weeks 1-5 link to individual assignments, while Weeks 6-8 link to the shared **Team Project Repository** on GitHub.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 1: HTML Layout & Figma Analysis</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Website Layout. Project: Analysis Board.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-1-HTML-Layout-Analysis-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Artifact)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 2: Responsive CSS & Figma Design Start</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox. Project: Figma Design (Phase 1).</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-2-Responsive-CSS-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View CSS)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 3: Simple Website Construction</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Simple Website. Project: Figma Design (Phase 2).</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-3-Simple-Website-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(View Pages)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 4: Advanced CSS Techniques</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Grids and Flexbox (Review). Project: Figma Design (Phase 3).</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-4-Advanced-CSS-Components" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Components)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 5: Forms & PHP Integration</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Creating Forms. Project: Figma Design (Final Mockup).</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Week-5-Forms-and-PHP-Files" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View PHP Files)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                        <span class="font-bold text-accent">Week 6: PROJECT MILESTONE 1 (Coding in VS Code)</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Project: Client Website Implementation. (Check Group GitHub)</span>
+                                                        <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent font-bold text-sm" data-filetype="zip">(Team GitHub Repo)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                        <span class="font-bold text-accent">Week 7: PHP/JS Implementation</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Project: Website Backend & Interactivity. (Check Group GitHub)</span>
+                                                        <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Team GitHub Link)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
+                                                        <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Presentation</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Project: **Sunny Socks** Final Delivery and Presentation.</span>
+                                                        <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL TEAM PROJECT)</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Period 1: Professional Skills & Documentation (Separate Module) -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-accent/70 transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-accent hover:text-accent-dark transition" data-target="period-1-prof-skills">
+                                                Period 1 Professional Skills & Documentation
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="period-1-prof-skills" class="period-content hidden mt-3 space-y-2">
+                                                <p class="text-sm text-text-muted mb-2 font-semibold border-b border-border-color pb-2">
+                                                    Key non-technical documentation showcasing teamwork and project planning for the web development module.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default pt-2">
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Team Communication Plan</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Document outlining meeting cadence and conflict resolution.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/P1-Communication-Plan.doc" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View DOC)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Project Budget Sheet</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Tracking estimated vs. actual resource allocation.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/P1-Budget-Tracking.xlsx" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="xlsx">(View XLSX)</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Period 2: Database Management (8 Weeks) -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-2">
+                                                Period 2: Database Management (MySQL, SQL, Proxmox)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="period-2" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Mastering **Relational Database Management** using **MySQL**, administration via **phpMyAdmin**, and creating robust server environments using **Proxmox** Virtual Machines.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 1: MySQL & Environment Setup</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Setting up a MySQL VM using Proxmox.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-1-MySQL-Setup" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Config)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 2: Data Modeling & Normalization</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Designing Conceptual and Logical ER-Diagrams.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-2-ER-Diagram" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View ERD)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 3: SQL Data Definition Language (DDL)</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Creating tables, constraints, and indexes.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-3-DDL-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(View SQL)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
+                                                        <span class="font-bold text-accent">Week 4: PROJECT MILESTONE 2 (Schema Review)</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Project: Finalized Database Schema and Normalization Report.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-4-Schema-Report" target="_blank" class="text-accent font-bold text-sm" data-filetype="doc">(Report Link)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 5: SQL Data Manipulation Language (DML)</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Writing complex SELECT queries (JOINs, subqueries).</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-5-DML-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(SQL Script 2)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 6: Integrating CRUD Operations (PHP/JS)</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: Connecting the Sunny Socks project to the MySQL backend.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-6-Integration-Code" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(Integration Code)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Week 7: Database Security & Maintenance</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Assignment: User privilege management via phpMyAdmin and backups.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-7-Security-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Security Report)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
+                                                        <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Report</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Project: Full Database Implementation and Administrative Documentation.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL PROJECT)</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- Period 2: Professional Skills & Documentation (Separate Module) -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-accent/70 transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-accent hover:text-accent-dark transition" data-target="period-2-prof-skills">
+                                                Period 2 Professional Skills & Documentation
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="period-2-prof-skills" class="period-content hidden mt-3 space-y-2">
+                                                <p class="text-sm text-text-muted mb-2 font-semibold border-b border-border-color pb-2">
+                                                    Key non-technical documentation showcasing reporting and risk management skills for the database management module.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default pt-2">
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Technical Report Template</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Standardized template for writing formal IT reports.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/P2-Technical-Report-Template.doc" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View DOC)</a>
+                                                    </li>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium">Risk Assessment Log</span> 
+                                                        <span class="text-sm text-text-muted hidden md:block">Spreadsheet detailing identified and mitigated project risks.</span>
+                                                        <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/P2-Risk-Assessment-Log.xlsx" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="xlsx">(View XLSX)</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
-                                
-                                <!-- Period 2: Detailed Breakdown (8 Weeks - Database Management) -->
-                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
-                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-2">
-                                        Period 2: Database Management (MySQL, SQL, Proxmox)
-                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <!-- Semester 1 Container End -->
+
+                                <!-- Semester 2 Container (Placeholder) -->
+                                <div class="bg-secondary/50 rounded-lg shadow-md border border-accent/50">
+                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-muted transition duration-300" data-target="semester-2">
+                                        <span>Semester 2: Future Modules (Periods 3 & 4)</span>
+                                        <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </button>
-                                    <div id="period-2" class="period-content hidden mt-3 space-y-2">
-                                        <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
-                                            **Project Focus:** Mastering **Relational Database Management** using **MySQL**, administration via **phpMyAdmin**, and creating robust server environments using **Proxmox** Virtual Machines.
-                                        </p>
-                                        <ul class="list-none space-y-2 text-text-default">
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 1: MySQL & Environment Setup</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Setting up a MySQL VM using Proxmox.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-1-MySQL-Setup" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="doc">(View Config)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 2: Data Modeling & Normalization</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Designing Conceptual and Logical ER-Diagrams.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-2-ER-Diagram" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(View ERD)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 3: SQL Data Definition Language (DDL)</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Creating tables, constraints, and indexes.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-3-DDL-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(View SQL)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/10 rounded-sm transition-colors duration-300">
-                                                <span class="font-bold text-accent">Week 4: PROJECT MILESTONE 2 (Schema Review)</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Project: Finalized Database Schema and Normalization Report.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-4-Schema-Report" target="_blank" class="text-accent font-bold text-sm" data-filetype="doc">(Report Link)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 5: SQL Data Manipulation Language (DML)</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Writing complex SELECT queries (JOINs, subqueries).</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-5-DML-SQL" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="sql">(SQL Script 2)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 6: Integrating CRUD Operations (PHP/JS)</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: Connecting the Sunny Socks project to the MySQL backend.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-6-Integration-Code" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="zip">(Integration Code)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-primary rounded-sm transition-colors duration-300">
-                                                <span class="font-medium">Week 7: Database Security & Maintenance</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Assignment: User privilege management via phpMyAdmin and backups.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Period-2-Week-7-Security-Report" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="pdf">(Security Report)</a>
-                                            </li>
-                                            <li class="p-2 border-b border-border-color flex justify-between items-center bg-accent/20 rounded-sm transition-colors duration-300">
-                                                <span class="font-bold text-text-default">Week 8: FINAL SUBMISSION & Report</span> 
-                                                <span class="text-sm text-text-muted hidden md:block">Project: Full Database Implementation and Administrative Documentation.</span>
-                                                <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME" target="_blank" class="text-primary bg-accent px-2 py-1 rounded text-sm font-bold hover:bg-accent-dark" data-filetype="zip">(FULL PROJECT)</a>
-                                            </li>
-                                        </ul>
+                                    <div id="semester-2" class="semester-content hidden p-4 pt-0">
+                                        <p class="text-text-muted italic text-sm">Content for Periods 3 and 4 (Semester 2) will be added here once the modules begin.</p>
                                     </div>
                                 </div>
+                                <!-- Semester 2 Container End -->
                                 
-                                <!-- Other Codes & Tools Section -->
-                                <div class="bg-secondary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                <!-- Other Codes & Tools Section (Remains at Year 1 level, outside semesters) -->
+                                <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
                                     <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="period-codes">
                                         Tools & Version Control (GitHub, Docker, VS Code)
                                         <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -332,7 +455,7 @@
                     </div>
 
                     <!-- YEAR 2 (Placeholder) -->
-                    <div class="bg-primary rounded-xl shadow-accent border border-accent/20 transition-colors duration-300">
+                    <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300">
                         <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-2">
                             <span>Year 2: Intermediate Studies (Placeholder)</span>
                             <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -392,7 +515,9 @@
     </footer>
 
     <script>
-        // --- Theme Toggle Logic ---
+        const ACCORDION_TRANSITION_DURATION = 300; // Match CSS transition time
+        
+        // --- Theme Toggle Logic (Unchanged) ---
         const htmlElement = document.documentElement;
         const toggleButtons = document.querySelectorAll('#theme-toggle-desktop, #theme-toggle-mobile');
         const iconIds = ['theme-icon-desktop', 'theme-icon-mobile'];
@@ -400,7 +525,6 @@
         const sunIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 7V3h1v4h-1zM5.63 5.63l.71.71L6.34 7.07 7.05 7.78 6.34 7.07 5.63 6.36 4.92 5.65zM12 21v-4h1v4h-1zM5.63 18.37l.71-.71.71.71.71.71-1.42 1.42zM21 12h-4v1h4v-1zM3 12h4v1H3v-1zM18.37 5.63l-.71-.71-.71.71-.71.71 1.42 1.42zM12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg>';
         const moonIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a6.997 6.997 0 01-5.88 5.88A9 9 0 0012 3z"></path></svg>';
         
-        // Function to set the icons based on the current theme
         const setIcons = (isLight) => {
             iconIds.forEach(id => {
                 const iconElement = document.getElementById(id);
@@ -410,7 +534,6 @@
             });
         };
 
-        // Function to apply the theme
         const applyTheme = (isLight) => {
             if (isLight) {
                 htmlElement.classList.add('light');
@@ -422,7 +545,6 @@
             setIcons(isLight);
         };
 
-        // Initialize theme on page load
         const initializeTheme = () => {
             const savedTheme = localStorage.getItem('theme');
             const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -432,62 +554,132 @@
             if (savedTheme) {
                 isLightMode = savedTheme === 'light';
             } else {
-                // Default is dark mode, so only set light if system prefers it
                 isLightMode = prefersLight;
             }
             applyTheme(isLightMode);
         };
 
-        // Toggle handler
         const toggleTheme = () => {
             const isLight = htmlElement.classList.contains('light');
             applyTheme(!isLight);
         };
 
-        // Add listeners to both desktop and mobile buttons
         toggleButtons.forEach(button => {
             button.addEventListener('click', toggleTheme);
         });
 
-        // Run initialization
         initializeTheme();
 
-        // --- Mobile Menu Toggle ---
+        // --- Mobile Menu Toggle (Unchanged) ---
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         });
 
-        // Close mobile menu when a link is clicked
         document.querySelectorAll('#mobile-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('mobile-menu').classList.add('hidden');
             });
         });
 
-        // --- Academic Portfolio Accordion Logic ---
-        document.querySelectorAll('.year-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const targetId = button.getAttribute('data-target');
-                const targetContent = document.getElementById(targetId);
-                const icon = button.querySelector('.accordion-icon');
+        // --- Academic Portfolio Accordion Logic (FIXED) ---
 
-                // Toggle visibility and rotation
-                targetContent.classList.toggle('hidden');
-                icon.classList.toggle('rotated');
-            });
-        });
+        // Utility function to recursively update the maxHeight of parent accordion containers
+        const updateParentHeights = (element) => {
+            let current = element.parentElement;
+            while (current) {
+                // Look for the parent accordion content containers
+                if (current.classList.contains('year-content') || current.classList.contains('semester-content')) {
+                    // Check if the parent is currently OPEN (i.e., its button's icon is rotated)
+                    const parentButton = document.querySelector(`[data-target="${current.id}"]`);
+                    // Ensure parentButton exists and check if it's an accordion toggle (which is how we track open state)
+                    const isParentOpen = parentButton && parentButton.querySelector('.accordion-icon').classList.contains('rotated');
+                    
+                    if (isParentOpen) {
+                         // Recalculate height to accommodate the change in the child
+                        const newHeight = current.scrollHeight;
+                        // Only update if the height has changed significantly to avoid jitter
+                        // Using clientHeight since maxHeight might be set to 'fit-content' (effectively auto)
+                        if (Math.abs(current.clientHeight - newHeight) > 2) { 
+                            current.style.maxHeight = newHeight + 'px';
+                        }
+                    }
+                }
+                // Stop walking up if we hit the main container or body
+                if (current.id === 'portfolio-container' || current.tagName === 'BODY') break;
+                current = current.parentElement;
+            }
+        };
 
-        document.querySelectorAll('.period-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const targetId = button.getAttribute('data-target');
-                const targetContent = document.getElementById(targetId);
-                const icon = button.querySelector('.accordion-icon');
+
+        const handleAccordionToggle = (button) => {
+            const targetId = button.getAttribute('data-target');
+            const targetContent = document.getElementById(targetId);
+            const icon = button.querySelector('.accordion-icon');
+            
+            if (!targetContent || !icon) return;
+
+            // Check if the content is currently collapsed (uses the 'hidden' class from HTML initial state)
+            const isOpening = targetContent.classList.contains('hidden');
+
+            if (isOpening) {
+                // OPENING
                 
-                // Toggle visibility and rotation
-                targetContent.classList.toggle('hidden');
-                icon.classList.toggle('rotated');
-            });
+                // 1. Make it visible so scrollHeight can be calculated
+                targetContent.classList.remove('hidden'); 
+                
+                requestAnimationFrame(() => {
+                    // 2. Set max-height and opacity to start the transition
+                    // Set a very large max-height if the content will be dynamically resized after transition
+                    // For nested structures, using scrollHeight is better before transition end
+                    targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
+                    targetContent.style.opacity = '1';
+                    icon.classList.add('rotated');
+                    
+                    // 3. Crucial: Recursively update parent heights to accommodate new size
+                    updateParentHeights(targetContent);
+                });
+                
+                // Optional: After transition, set maxHeight to 'fit-content' so the section can grow
+                // or shrink with content changes without triggering another transition.
+                targetContent.addEventListener('transitionend', function handler() {
+                    // Check if max-height is still what we set, indicating it finished opening
+                    if (targetContent.style.maxHeight !== '0px') { 
+                        targetContent.style.maxHeight = 'fit-content';
+                    }
+                    targetContent.removeEventListener('transitionend', handler);
+                }, { once: true });
+
+
+            } else {
+                // CLOSING
+                // 1. Set max-height explicitly to current size before transitioning to 0
+                // We must read the actual height (scrollHeight) now, not 'fit-content' or a fixed pixel value
+                // that might be incorrect after content has been dynamic.
+                targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
+                
+                requestAnimationFrame(() => {
+                    // 2. Transition to collapse
+                    targetContent.style.maxHeight = '0';
+                    targetContent.style.opacity = '0';
+                    icon.classList.remove('rotated');
+                });
+
+                // 3. Hide completely and update parent heights after the transition ends
+                setTimeout(() => {
+                    targetContent.classList.add('hidden');
+                    // Clean up inline styles after closing
+                    targetContent.style.removeProperty('max-height'); 
+                    targetContent.style.removeProperty('opacity');
+                    // Crucial: Recursively update parent heights to accommodate lost size
+                    updateParentHeights(targetContent);
+                }, ACCORDION_TRANSITION_DURATION + 50);
+            }
+        };
+
+
+        document.querySelectorAll('.year-toggle, .semester-toggle, .period-toggle').forEach(button => {
+            button.addEventListener('click', () => handleAccordionToggle(button));
         });
 
 
