@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $message_type = 'error';
             } else {
                 // Allowed file types
-                $allowed_types = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif', 'txt'];
+                $allowed_types = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif', 'txt', 'php', 'html', 'css', 'js', 'sql', 'zip'];
                 $file_ext = strtolower(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION));
                 if (!in_array($file_ext, $allowed_types)) {
                     $message = 'Invalid file type. Allowed: ' . implode(', ', $allowed_types);
@@ -225,7 +225,7 @@ $files = $files->fetchAll();
                 <div class="mb-4">
                     <label for="file" class="block text-gray-700 font-medium mb-2">File *</label>
                     <input type="file" id="file" name="file" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                    <p class="text-sm text-gray-500 mt-1">Max size: 10MB. Allowed: pdf, doc, docx, xls, xlsx, jpg, jpeg, png, gif, txt</p>
+                    <p class="text-sm text-gray-500 mt-1">Max size: 10MB. Allowed: pdf, doc, docx, xls, xlsx, jpg, jpeg, png, gif, txt, php, html, css, js, sql, zip</p>
                 </div>
                 
                 <div class="mb-6">

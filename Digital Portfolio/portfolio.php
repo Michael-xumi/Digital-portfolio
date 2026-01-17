@@ -74,100 +74,8 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
             }
         }
     </script>
-    <style>
-        /* --- CSS VARIABLE DEFINITIONS --- */
-        /* Dark Mode Defaults (applies to :root when .light is not present) */
-        :root {
-            --color-primary: #111827; /* Deep Dark Blue/Gray (Page BG) */
-            --color-secondary: #1f2937; /* Slightly Lighter Dark (Card BG) */
-            --color-text-default: #f9fafb; /* Light Gray (Main Text) */
-            --color-text-muted: #9ca3af; /* Gray 400 (Muted Text) */
-            --color-accent: #06b6d4; /* Cyan 500 */
-            --color-accent-dark: #0891b2; /* Cyan 600 */
-            --color-border: #374151; /* Gray 700 */
-            --shadow-accent-color: rgba(6, 182, 212, 0.2);
-        }
-
-        /* Light Mode Overrides (applies when .light class is on the <html> tag) */
-        .light {
-            --color-primary: #ffffff; /* White (Page BG) */
-            --color-secondary: #f3f4f6; /* Light Gray (Card BG) */
-            --color-text-default: #1f2937; /* Dark Gray (Main Text) */
-            --color-text-muted: #6b7280; /* Medium Gray (Muted Text) */
-            --color-border: #e5e7eb; /* Gray 200 */
-            --shadow-accent-color: rgba(6, 182, 212, 0.4);
-        }
-
-        /* --- Custom Styles --- */
-        
-        /* Apply variables to the body */
-        body {
-            background-color: var(--color-primary);
-            color: var(--color-text-default);
-            font-family: 'Inter', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Custom scrollbar for aesthetics on dark theme */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--color-secondary); }
-        ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
-
-        .accordion-icon { transition: transform 0.3s ease; }
-        .rotated { transform: rotate(180deg); }
-        /* Adjusted shadow to use variable color */
-        .shadow-accent { box-shadow: 0 4px 15px -1px var(--shadow-accent-color), 0 2px 5px -2px rgba(6, 182, 212, 0.1); }
-        
-        /* Smooth animations for accordion (year, semester, and period levels) */
-        .year-content, .semester-content, .period-content {
-            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            overflow: hidden;
-            /* The 'hidden' Tailwind class in HTML provides the initial display: none; */
-            /* max-height and opacity will be controlled by JS */
-            max-height: 0; 
-            opacity: 0;
-        }
-
-        /* Link hover effects and filetype icons */
-        a[data-filetype]::before {
-            content: "📄 ";
-            opacity: 0.7;
-            margin-right: 0.25rem;
-        }
-        a[data-filetype="pdf"]::before { content: "📑 "; }
-        a[data-filetype="sql"]::before { content: "🗄️ "; }
-        a[data-filetype="zip"]::before { content: "📦 "; }
-        a[data-filetype="xlsx"]::before { content: "📊 "; }
-        a[data-filetype="link"]::before { content: "🔗 "; }
-        a[data-filetype="doc"]::before { content: "📝 "; }
-        a[data-filetype="yml"]::before { content: "⚙️ "; }
-        
-        /* Improved card hover effects */
-        .period-toggle:hover {
-            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.05), transparent);
-        }
-        
-        /* Hero section gradient background */
-        #home {
-            background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
-        }
-        
-        /* Skill badge styling */
-        .skill-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            margin: 0.25rem;
-            background: var(--color-accent);
-            color: var(--color-primary);
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: transform 0.2s;
-        }
-        .skill-badge:hover {
-            transform: scale(1.05);
-        }
-    </style>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <!-- Initial body class ensures dark mode styles are applied before JS loads -->
 <body class="antialiased">
@@ -250,7 +158,7 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
                 <div class="lg:w-2/3 text-text-default">
                     <h2 class="text-3xl sm:text-4xl font-bold mb-4 text-accent">About Michael Obeng Boateng</h2>
                     <p class="text-lg text-text-muted mb-3">
-                        I am a dedicated student in **Information Technology** at **NHL Stenden** in **Emmen, Netherlands**, starting my studies in the 2025-2026 academic year.
+                        I am a dedicated student in Information Technology at NHL Stenden in Emmen, Netherlands, starting my studies in the 2025-2026 academic year.
                     </p>
                     <p class="text-lg text-text-muted mb-6">
                         I focus on building practical, scalable solutions using modern development tools and methodologies, including **version control (GitHub)** and **containerization (Docker)**. This portfolio serves as my digital record of academic achievement and hands-on project experience.
@@ -258,15 +166,12 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
                     <div class="flex space-x-4">
                         <!-- GitHub Link (Updated to personal profile) -->
                         <a href="https://github.com/Michael-xumi" target="_blank" class="text-accent hover:text-accent-dark font-semibold flex items-center transition duration-300">
-                            <!-- GitHub Icon (Inline SVG) -->
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.385.6.11.82-.26.82-.577 0-.285-.01-1.042-.015-2.046-3.334.723-4.04-1.606-4.04-1.606-.546-1.387-1.334-1.756-1.334-1.756-1.087-.745.084-.73.084-.73 1.205.085 1.838 1.838 1.238 1.07 1.833 2.81 1.303 3.492.996.108-.775.419-1.303.76-1.602-2.665-.304-5.466-1.333-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.125-.304-.535-1.523.117-3.176 0 0 1.008-.32 3.303 1.23a11.517 11.517 0 016 0c2.295-1.55 3.303-1.23 3.303-1.23.652 1.653.242 2.872.117 3.176.767.84 1.235 1.91 1.235 3.22 0 4.61-2.805 5.62-5.475 5.92-.41.357-.78.96-.78 1.936 0 1.39.01 2.51.015 2.85.004.32.227.69.83.57C20.563 21.8 24 17.302 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub Profile (Michael-xumi)
+            
+                           GitHub Profile (Michael-xumi)
                         </a>
                         <!-- LinkedIn Link -->
-                        <a href="#" class="text-accent hover:text-accent-dark font-semibold flex items-center transition duration-300">
-                            <!-- LinkedIn Icon (Inline SVG) -->
-                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.32-.477-2.222-1.657-2.222-1.218 0-1.94 1.01-1.94 2.222v5.569H9.722v-5.569c0-1.32-.477-2.222-1.657-2.222-1.218 0-1.94 1.01-1.94 2.222v5.569H2.57v-8.994h3.552v1.542h.05c.49-.933 1.685-1.905 3.864-1.905 2.766 0 4.88 1.815 4.88 5.717v5.63h3.553v-6.38c0-3.41-2.146-5.263-4.997-5.263-2.378 0-3.874 1.278-4.52 2.457h-.048v-2.074h-3.553v8.993zM5.55 3.75c-1.157 0-1.942.78-1.942 1.775 0 .996.785 1.775 1.942 1.775 1.157 0 1.942-.78 1.942-1.775 0-.995-.785-1.775-1.942-1.775z"/></svg>
-                            LinkedIn Profile Link
+                        <a href="https://www.linkedin.com/in/michaeg-boateng-55b28826a/" class="text-accent hover:text-accent-dark font-semibold flex items-center transition duration-300">
+                           LinkedIn Profile Link
                         </a>
                     </div>
                 </div>
@@ -435,14 +340,80 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
                                 </div>
                                 <!-- Semester 1 Container End -->
 
-                                <!-- Semester 2 Container (Placeholder) -->
+                                <!-- Semester 2 Container -->
                                 <div class="bg-secondary/50 rounded-lg shadow-md border border-accent/50">
-                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-muted transition duration-300" data-target="semester-2">
-                                        <span>Semester 2: Future Modules (Periods 3 & 4)</span>
+                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-default hover:text-accent transition duration-300" data-target="semester-2">
+                                        <span>Semester 2: Programming & Innovation (Periods 3 & 4)</span>
                                         <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                                     </button>
-                                    <div id="semester-2" class="semester-content hidden p-4 pt-0">
-                                        <p class="text-text-muted italic text-sm">Content for Periods 3 and 4 (Semester 2) will be added here once the modules begin.</p>
+                                    <div id="semester-2" class="semester-content hidden p-4 pt-0 space-y-4">
+                                        
+                                        <!-- Period 3: Object-oriented Programming -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year1-period-3">
+                                                Period 3: Object-oriented Programming (Java, BattleBot)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year1-period-3" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Take the first step towards programming a software application by working with Java. Work with hardware in the BattleBot project.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 1 Period 3
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 3: Object-oriented Programming (Java, BattleBot)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year1_period3_id = $cat ? $cat['id'] : null;
+                                                    $year1_period3_files = $year1_period3_id ? getFiles($pdo, $year1_period3_id, $user_role, $user_id) : [];
+                                                    if (empty($year1_period3_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year1_period3_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Period 4: Project Innovate -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year1-period-4">
+                                                Period 4: Project Innovate (Computational Thinking, Project Management)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year1-period-4" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Start your own project and, paired with a module in computational thinking, learn what decisions are needed to realise success.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 1 Period 4
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 4: Project Innovate (Computational Thinking, Project Management)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year1_period4_id = $cat ? $cat['id'] : null;
+                                                    $year1_period4_files = $year1_period4_id ? getFiles($pdo, $year1_period4_id, $user_role, $user_id) : [];
+                                                    if (empty($year1_period4_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year1_period4_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                 </div>
                                 <!-- Semester 2 Container End -->
@@ -456,7 +427,7 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
                                     <div id="period-codes" class="period-content hidden mt-3 space-y-3">
                                         <p class="text-text-muted font-medium">This section documents proficiency in critical development tools used across all periods.</p>
                                         <ul class="list-disc list-inside space-y-2 text-text-muted ml-4">
-                                            <li class="text-text-default"><span class="font-bold text-accent">GitHub Usage (Individual Project):</span> Commits, branches, and merges for the individual assignments. <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME" target="_blank" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="link">(Go to Individual Assignments Repo)</a></li>
+                                            <li class="text-text-default"><span class="font-bold text-accent">GitHub Usage (Individual Project):</span> Commits, branches, and merges for the individual assignments. <a href="https://github.com/Michael-xumi" target="_blank" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="link">(Go to Individual Assignments Repo)</a></li>
                                             <li class="text-text-default"><span class="font-bold text-accent">GitHub Usage (Group Project):</span> Link to the collaborative repository. <a href="https://github.com/JustinasLaunikonis/Sunny-Socks" target="_blank" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="link">(Go to Sunny Socks Team Repo)</a></li>
                                             <li class="text-text-default"><span class="font-bold text-accent">Docker:</span> Setup and management of development environments. <a href="https://github.com/Michael-xumi/YOUR-NEW-REPOSITORY-NAME/Dockerfile" class="text-accent hover:underline ml-2 text-sm font-medium" data-filetype="yml">(View Dockerfile)</a></li>
                                         </ul>
@@ -468,39 +439,228 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
                         </div>
                     </div>
 
-                    <!-- YEAR 2 (Placeholder) -->
+                    <!-- YEAR 2 -->
                     <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300">
                         <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-2">
-                            <span>Year 2: Intermediate Studies (Placeholder)</span>
+                            <span>Year 2: Advanced IT Studies - NHL Stenden (2026-2027)</span>
                             <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <div id="year-2" class="year-content hidden p-5 pt-0">
-                            <p class="text-text-muted italic">Content for Year 2 will appear here.</p>
+                            <div class="space-y-6 border-l-4 border-accent pl-6">
+                                
+                                <!-- Semester 1 Container Start -->
+                                <div class="bg-secondary/50 rounded-lg shadow-md border border-accent/50">
+                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-default hover:text-accent transition duration-300" data-target="year2-semester-1">
+                                        <span>Semester 1: Advanced Programming & Data (Periods 1 & 2)</span>
+                                        <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="year2-semester-1" class="semester-content hidden p-4 pt-0 space-y-4">
+                                        
+                                        <!-- Period 1: Object Oriented Programming 2 -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year2-period-1">
+                                                Period 1: Object Oriented Programming 2 (Java, OOP, Design Patterns)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year2-period-1" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Work on a project with external clients, applying Java and object-oriented programming skills. You follow an advanced course on intricate design patterns, complex data structures and practical implementation techniques to raise your understanding of Java and OOP.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 2 Period 1
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 1: Object Oriented Programming 2 (Java, OOP, Design Patterns)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year2_period1_id = $cat ? $cat['id'] : null;
+                                                    $year2_period1_files = $year2_period1_id ? getFiles($pdo, $year2_period1_id, $user_role, $user_id) : [];
+                                                    if (empty($year2_period1_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year2_period1_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Period 2: Data Processing -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year2-period-2">
+                                                Period 2: Data Processing (Data Analysis, Visualization, Python)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year2-period-2" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Learn to interpret complex datasets. Delve into data manipulation, analysis, and visualization and gain a comprehensive understanding of data processing methodologies.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 2 Period 2
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 2: Data Processing (Data Analysis, Visualization, Python)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year2_period2_id = $cat ? $cat['id'] : null;
+                                                    $year2_period2_files = $year2_period2_id ? getFiles($pdo, $year2_period2_id, $user_role, $user_id) : [];
+                                                    if (empty($year2_period2_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year2_period2_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <!-- Semester 1 Container End -->
+
+                                <!-- Semester 2 Container -->
+                                <div class="bg-secondary/50 rounded-lg shadow-md border border-accent/50">
+                                    <button class="semester-toggle flex justify-between items-center w-full p-4 text-left font-extrabold text-lg sm:text-xl text-text-default hover:text-accent transition duration-300" data-target="year2-semester-2">
+                                        <span>Semester 2: Quality & Development (Periods 3 & 4)</span>
+                                        <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="year2-semester-2" class="semester-content hidden p-4 pt-0 space-y-4">
+                                        
+                                        <!-- Period 3: Software Quality -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year2-period-3">
+                                                Period 3: Software Quality (Testing, QA, Debugging)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year2-period-3" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Create great user experiences by learning about testing methodologies and quality assurance techniques, and explore error detection, debugging and software optimization for reliable solutions.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 2 Period 3
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 3: Software Quality (Testing, QA, Debugging)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year2_period3_id = $cat ? $cat['id'] : null;
+                                                    $year2_period3_files = $year2_period3_id ? getFiles($pdo, $year2_period3_id, $user_role, $user_id) : [];
+                                                    if (empty($year2_period3_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year2_period3_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Period 4: App Development -->
+                                        <div class="bg-primary p-4 rounded-lg shadow-inner border border-border-color transition-colors duration-300">
+                                            <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-text-default hover:text-accent transition" data-target="year2-period-4">
+                                                Period 4: App Development (Mobile Apps, UI/UX, Cross-Platform)
+                                                <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                            </button>
+                                            <div id="year2-period-4" class="period-content hidden mt-3 space-y-4">
+                                                <p class="text-sm text-text-muted mb-4 border-b border-border-color pb-2">
+                                                    **Project Focus:** Merge innovation and functionality to create intuitive and dynamic mobile applications. Through hands-on projects and guided instruction, you navigate UI/UX design, front-end and back-end integration, and cross-platform development.
+                                                </p>
+                                                <ul class="list-none space-y-2 text-text-default">
+                                                    <?php
+                                                    // Fetch category ID for Year 2 Period 4
+                                                    $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = ?");
+                                                    $stmt->execute(['Period 4: App Development (Mobile Apps, UI/UX, Cross-Platform)']);
+                                                    $cat = $stmt->fetch();
+                                                    $year2_period4_id = $cat ? $cat['id'] : null;
+                                                    $year2_period4_files = $year2_period4_id ? getFiles($pdo, $year2_period4_id, $user_role, $user_id) : [];
+                                                    if (empty($year2_period4_files)): ?>
+                                                    <li class="p-2 text-text-muted italic">No files uploaded yet.</li>
+                                                    <?php else: ?>
+                                                    <?php foreach ($year2_period4_files as $file): ?>
+                                                    <li class="p-2 border-b border-border-color flex justify-between items-center hover:bg-secondary rounded-sm transition-colors duration-300">
+                                                        <span class="font-medium"><?php echo htmlspecialchars($file['title']); ?></span> 
+                                                        <span class="text-sm text-text-muted hidden md:block"><?php echo htmlspecialchars($file['description']); ?></span>
+                                                        <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:text-accent-dark text-sm font-medium" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">(View Artifact)</a>
+                                                    </li>
+                                                    <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <!-- Semester 2 Container End -->
+                                
+                                <!-- Further Learning Section -->
+                                <div class="bg-primary p-4 rounded-lg shadow-inner border border-accent/70 transition-colors duration-300">
+                                    <button class="period-toggle flex justify-between items-center w-full text-left font-bold text-lg sm:text-xl text-accent hover:text-accent-dark transition" data-target="year2-further-learning">
+                                        Further Learning & Key Competencies
+                                        <svg class="w-5 h-5 accordion-icon text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <div id="year2-further-learning" class="period-content hidden mt-3 space-y-3">
+                                        <p class="text-text-muted font-medium">Follow-up your internship with modules such as Design Patterns, IT architecture, and IT change management. Work on a complex, multi-faceted project in the module Knowledge Management.</p>
+                                        <div class="flex flex-wrap gap-2 mt-4">
+                                            <span class="skill-badge">Java</span>
+                                            <span class="skill-badge">Software Quality</span>
+                                            <span class="skill-badge">IT Service Management</span>
+                                            <span class="skill-badge">Databases</span>
+                                            <span class="skill-badge">Operating Systems</span>
+                                            <span class="skill-badge">Data Exchange & Storage</span>
+                                            <span class="skill-badge">Algorithms</span>
+                                            <span class="skill-badge">Data Structures</span>
+                                            <span class="skill-badge">Testing</span>
+                                            <span class="skill-badge">JavaScript</span>
+                                            <span class="skill-badge">Research</span>
+                                            <span class="skill-badge">Dutch</span>
+                                            <span class="skill-badge">Professional Skills</span>
+                                            <span class="skill-badge">Organizational Processes</span>
+                                            <span class="skill-badge">App Development</span>
+                                            <span class="skill-badge">Agile Development</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Debug: All Files for Admin -->
-                    <?php if ($user_role === 'Administrator'): ?>
-                        <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300 p-5">
-                            <h3 class="text-xl font-bold text-accent mb-4">All Uploaded Files (Admin Debug)</h3>
-                            <?php
-                            $all_files = $pdo->prepare("SELECT f.*, c.name as category_name FROM files f LEFT JOIN categories c ON f.category_id = c.id WHERE f.status = 'active' ORDER BY f.id DESC");
-                            $all_files->execute();
-                            $all_files = $all_files->fetchAll();
-                            if (empty($all_files)): ?>
-                                <p class="text-text-muted">No files uploaded.</p>
-                            <?php else: ?>
-                                <ul class="space-y-2">
-                                    <?php foreach ($all_files as $file): ?>
-                                        <li class="text-text-default">
-                                            <strong><?php echo htmlspecialchars($file['title']); ?></strong> - Category: <?php echo htmlspecialchars($file['category_name'] ?: 'None'); ?> 
-                                            <a href="<?php echo htmlspecialchars($file['file_path']); ?>" target="_blank" class="text-accent hover:underline" data-filetype="<?php echo pathinfo($file['file_path'], PATHINFO_EXTENSION); ?>">View File</a>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php endif; ?>
+                    <!-- YEAR 3 (Placeholder) -->
+                    <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300">
+                        <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-3">
+                            <span>Year 3: Advanced Studies (Placeholder)</span>
+                            <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="year-3" class="year-content hidden p-5 pt-0">
+                            <p class="text-text-muted italic">Content for Year 3 will appear here.</p>
                         </div>
-                    <?php endif; ?>
+                    </div>
+
+                    <!-- YEAR 4 (Placeholder) -->
+                    <div class="bg-primary rounded-xl shadow-accent border border-accent/30 transition-colors duration-300">
+                        <button class="year-toggle flex justify-between items-center w-full p-5 text-left font-extrabold text-xl sm:text-2xl text-accent hover:text-accent-dark transition duration-300" data-target="year-4">
+                            <span>Year 4: Final Year (Placeholder)</span>
+                            <svg class="w-6 h-6 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div id="year-4" class="year-content hidden p-5 pt-0">
+                            <p class="text-text-muted italic">Content for Year 4 will appear here.</p>
+                        </div>
+                    </div>
+
+
+                    
 
                 </div>
 
@@ -551,201 +711,7 @@ function getFiles($pdo, $category_id, $user_role, $user_id) {
         </div>
     </footer>
 
-    <script>
-        const ACCORDION_TRANSITION_DURATION = 300; // Match CSS transition time
-        
-        // --- Theme Toggle Logic (Unchanged) ---
-        const htmlElement = document.documentElement;
-        const toggleButtons = document.querySelectorAll('#theme-toggle-desktop, #theme-toggle-mobile');
-        const iconIds = ['theme-icon-desktop', 'theme-icon-mobile'];
-
-        const sunIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 7V3h1v4h-1zM5.63 5.63l.71.71L6.34 7.07 7.05 7.78 6.34 7.07 5.63 6.36 4.92 5.65zM12 21v-4h1v4h-1zM5.63 18.37l.71-.71.71.71.71.71-1.42 1.42zM21 12h-4v1h4v-1zM3 12h4v1H3v-1zM18.37 5.63l-.71-.71-.71.71-.71.71 1.42 1.42zM12 18a6 6 0 100-12 6 6 0 000 12z"></path></svg>';
-        const moonIcon = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"></path><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.12-1.36a6.997 6.997 0 01-5.88 5.88A9 9 0 0012 3z"></path></svg>';
-        
-        const setIcons = (isLight) => {
-            iconIds.forEach(id => {
-                const iconElement = document.getElementById(id);
-                if (iconElement) {
-                    iconElement.innerHTML = isLight ? moonIcon : sunIcon;
-                }
-            });
-        };
-
-        const applyTheme = (isLight) => {
-            if (isLight) {
-                htmlElement.classList.add('light');
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlElement.classList.remove('light');
-                localStorage.setItem('theme', 'dark');
-            }
-            setIcons(isLight);
-        };
-
-        const initializeTheme = () => {
-            const savedTheme = localStorage.getItem('theme');
-            const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-            
-            let isLightMode = false;
-
-            if (savedTheme) {
-                isLightMode = savedTheme === 'light';
-            } else {
-                isLightMode = prefersLight;
-            }
-            applyTheme(isLightMode);
-        };
-
-        const toggleTheme = () => {
-            const isLight = htmlElement.classList.contains('light');
-            applyTheme(!isLight);
-        };
-
-        toggleButtons.forEach(button => {
-            button.addEventListener('click', toggleTheme);
-        });
-
-        initializeTheme();
-
-        // --- Mobile Menu Toggle (Unchanged) ---
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        });
-
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.add('hidden');
-            });
-        });
-
-        // --- Academic Portfolio Accordion Logic (FIXED) ---
-
-        // Utility function to recursively update the maxHeight of parent accordion containers
-        const updateParentHeights = (element) => {
-            let current = element.parentElement;
-            while (current) {
-                // Look for the parent accordion content containers
-                if (current.classList.contains('year-content') || current.classList.contains('semester-content')) {
-                    // Check if the parent is currently OPEN (i.e., its button's icon is rotated)
-                    const parentButton = document.querySelector(`[data-target="${current.id}"]`);
-                    // Ensure parentButton exists and check if it's an accordion toggle (which is how we track open state)
-                    const isParentOpen = parentButton && parentButton.querySelector('.accordion-icon').classList.contains('rotated');
-                    
-                    if (isParentOpen) {
-                         // Recalculate height to accommodate the change in the child
-                        const newHeight = current.scrollHeight;
-                        // Only update if the height has changed significantly to avoid jitter
-                        // Using clientHeight since maxHeight might be set to 'fit-content' (effectively auto)
-                        if (Math.abs(current.clientHeight - newHeight) > 2) { 
-                            current.style.maxHeight = newHeight + 'px';
-                        }
-                    }
-                }
-                // Stop walking up if we hit the main container or body
-                if (current.id === 'portfolio-container' || current.tagName === 'BODY') break;
-                current = current.parentElement;
-            }
-        };
-
-
-        const handleAccordionToggle = (button) => {
-            const targetId = button.getAttribute('data-target');
-            const targetContent = document.getElementById(targetId);
-            const icon = button.querySelector('.accordion-icon');
-            
-            if (!targetContent || !icon) return;
-
-            // Check if the content is currently collapsed (uses the 'hidden' class from HTML initial state)
-            const isOpening = targetContent.classList.contains('hidden');
-
-            if (isOpening) {
-                // OPENING
-                
-                // 1. Make it visible so scrollHeight can be calculated
-                targetContent.classList.remove('hidden'); 
-                
-                requestAnimationFrame(() => {
-                    // 2. Set max-height and opacity to start the transition
-                    // Set a very large max-height if the content will be dynamically resized after transition
-                    // For nested structures, using scrollHeight is better before transition end
-                    targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
-                    targetContent.style.opacity = '1';
-                    icon.classList.add('rotated');
-                    
-                    // 3. Crucial: Recursively update parent heights to accommodate new size
-                    updateParentHeights(targetContent);
-                });
-                
-                // Optional: After transition, set maxHeight to 'fit-content' so the section can grow
-                // or shrink with content changes without triggering another transition.
-                targetContent.addEventListener('transitionend', function handler() {
-                    // Check if max-height is still what we set, indicating it finished opening
-                    if (targetContent.style.maxHeight !== '0px') { 
-                        targetContent.style.maxHeight = 'fit-content';
-                    }
-                    targetContent.removeEventListener('transitionend', handler);
-                }, { once: true });
-
-
-            } else {
-                // CLOSING
-                // 1. Set max-height explicitly to current size before transitioning to 0
-                // We must read the actual height (scrollHeight) now, not 'fit-content' or a fixed pixel value
-                // that might be incorrect after content has been dynamic.
-                targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
-                
-                requestAnimationFrame(() => {
-                    // 2. Transition to collapse
-                    targetContent.style.maxHeight = '0';
-                    targetContent.style.opacity = '0';
-                    icon.classList.remove('rotated');
-                });
-
-                // 3. Hide completely and update parent heights after the transition ends
-                setTimeout(() => {
-                    targetContent.classList.add('hidden');
-                    // Clean up inline styles after closing
-                    targetContent.style.removeProperty('max-height'); 
-                    targetContent.style.removeProperty('opacity');
-                    // Crucial: Recursively update parent heights to accommodate lost size
-                    updateParentHeights(targetContent);
-                }, ACCORDION_TRANSITION_DURATION + 50);
-            }
-        };
-
-
-        document.querySelectorAll('.year-toggle, .semester-toggle, .period-toggle').forEach(button => {
-            button.addEventListener('click', () => handleAccordionToggle(button));
-        });
-
-
-        // --- Simple Form Submission Handler (Non-functional without a backend) ---
-        const contactForm = document.querySelector('#contact form');
-        const statusMessage = document.getElementById('status-message');
-
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Clear previous styles and set processing message
-            statusMessage.textContent = 'Sending message...';
-            statusMessage.classList.remove('hidden', 'success-bg', 'success-text', 'error-bg', 'error-text');
-            statusMessage.classList.add('bg-secondary', 'text-accent');
-
-            setTimeout(() => {
-                // Simulate success
-                statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
-                statusMessage.classList.remove('bg-secondary', 'text-accent');
-                statusMessage.classList.add('success-bg', 'success-text');
-                
-                contactForm.reset();
-
-                setTimeout(() => {
-                    statusMessage.classList.add('hidden');
-                }, 5000);
-
-            }, 1500); 
-        });
-    </script>
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>

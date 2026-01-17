@@ -1,0 +1,92 @@
+/* --- CSS VARIABLE DEFINITIONS --- */
+/* Dark Mode Defaults (applies to :root when .light is not present) */
+:root {
+    --color-primary: #111827; /* Deep Dark Blue/Gray (Page BG) */
+    --color-secondary: #1f2937; /* Slightly Lighter Dark (Card BG) */
+    --color-text-default: #f9fafb; /* Light Gray (Main Text) */
+    --color-text-muted: #9ca3af; /* Gray 400 (Muted Text) */
+    --color-accent: #06b6d4; /* Cyan 500 */
+    --color-accent-dark: #0891b2; /* Cyan 600 */
+    --color-border: #374151; /* Gray 700 */
+    --shadow-accent-color: rgba(6, 182, 212, 0.2);
+}
+
+/* Light Mode Overrides (applies when .light class is on the <html> tag) */
+.light {
+    --color-primary: #ffffff; /* White (Page BG) */
+    --color-secondary: #f3f4f6; /* Light Gray (Card BG) */
+    --color-text-default: #1f2937; /* Dark Gray (Main Text) */
+    --color-text-muted: #6b7280; /* Medium Gray (Muted Text) */
+    --color-border: #e5e7eb; /* Gray 200 */
+    --shadow-accent-color: rgba(6, 182, 212, 0.4);
+}
+
+/* --- Custom Styles --- */
+
+/* Apply variables to the body */
+body {
+    background-color: var(--color-primary);
+    color: var(--color-text-default);
+    font-family: 'Inter', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom scrollbar for aesthetics on dark theme */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-secondary); }
+::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 4px; }
+
+.accordion-icon { transition: transform 0.3s ease; }
+.rotated { transform: rotate(180deg); }
+/* Adjusted shadow to use variable color */
+.shadow-accent { box-shadow: 0 4px 15px -1px var(--shadow-accent-color), 0 2px 5px -2px rgba(6, 182, 212, 0.1); }
+
+/* Smooth animations for accordion (year, semester, and period levels) */
+.year-content, .semester-content, .period-content {
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    overflow: hidden;
+    /* The 'hidden' Tailwind class in HTML provides the initial display: none; */
+    /* max-height and opacity will be controlled by JS */
+    max-height: 0; 
+    opacity: 0;
+}
+
+/* Link hover effects and filetype icons */
+a[data-filetype]::before {
+    content: "📄 ";
+    opacity: 0.7;
+    margin-right: 0.25rem;
+}
+a[data-filetype="pdf"]::before { content: "📑 "; }
+a[data-filetype="sql"]::before { content: "🗄️ "; }
+a[data-filetype="zip"]::before { content: "📦 "; }
+a[data-filetype="xlsx"]::before { content: "📊 "; }
+a[data-filetype="link"]::before { content: "🔗 "; }
+a[data-filetype="doc"]::before { content: "📝 "; }
+a[data-filetype="yml"]::before { content: "⚙️ "; }
+
+/* Improved card hover effects */
+.period-toggle:hover {
+    background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.05), transparent);
+}
+
+/* Hero section gradient background */
+#home {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+}
+
+/* Skill badge styling */
+.skill-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    margin: 0.25rem;
+    background: var(--color-accent);
+    color: var(--color-primary);
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: transform 0.2s;
+}
+.skill-badge:hover {
+    transform: scale(1.05);
+}

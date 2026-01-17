@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+body{
+    font-size: 18px;
+    
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-weight: 400;
+    background-color: lightgray;
+}
+    
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 10px;
+    width: 600px;
+    height: 700px;
+    margin: 0 auto;
+   
+    
+    background: lightgray;
+}
+
+em {
+    color: hsl(256, 67%, 59%);
+}
+
+.container>div {
+    color: hsl(0, 0%, 7%);
+    border-radius: 8px;
+    font-size: 18px;
+ padding: 20px;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.yellow100 {
+    background: hsl(31, 66%, 93%);
+}
+
+
+.purple500 {
+    background: hsl(256, 67%, 59%)
+}
+
+.container .purple500 > img{
+display: grid;
+grid-area: 3/4/5/5;
+
+}
+
+.purple100 {
+    background: hsl(254, 88%, 90%);
+}
+
+.yellow500 {
+    background: hsl(39, 100%, 71%);
+}
+
+.white {
+    background: hsl(0, 0%, 100%);
+
+}

@@ -1,0 +1,29 @@
+
+body{
+    background-color: hsl(30, 54%, 90%);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    padding: 2rem;
+    font-size: 16px; 
+}
+
+.content{
+    grid-column: 2/4;
+    background-color: hsl(0%, 0%, 100%);
+    min-height: 100vh;
+}
+
+.content > img{
+    width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,p{
+    padding-block:1rem;
+color:hsl(332,51%,32%);
+
+}
+
+.Prep.box{
+background-color: hsl(330,100%,98%);
+}
