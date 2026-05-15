@@ -17,22 +17,17 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-     - name: Setup SSH
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
-          # Scanning the Tailscale IP
           ssh-keyscan -H 100.78.46.42 >> ~/.ssh/known_hosts
 
       - name: Sync and Restart
         run: |
-          # Sync files but skip the heavy .git folder
+          # Sync files excluding git metadata
           rsync -avz -e "ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=no" --exclude '.git*' --delete ./ user@100.78.46.42:/home/user/Digital-portfolio
           
-          # SSH in and start Docker
-          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=no user@100.78.46.42 "cd '/home/user/Digital-portfolio/Digital Portfolio' && docker compose up -d"
-          
-          # SSH in and start Docker
-          # We use double quotes for the SSH command and single quotes for the Linux path
+          # Run Docker Compose in the subfolder
           ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=no user@100.78.46.42 "cd '/home/user/Digital-portfolio/Digital Portfolio' && docker compose up -d"
