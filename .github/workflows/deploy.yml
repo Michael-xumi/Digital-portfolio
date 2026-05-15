@@ -17,14 +17,17 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
 
-      - name: Setup SSH key
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan 100.78.46.42 >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          # Scanning the Tailscale IP
+          ssh-keyscan -H 100.78.46.42 >> ~/.ssh/known_hosts
 
-      - name: Deploy to server
+      - name: Sync and Restart
         run: |
-          rsync -avz -e "ssh -i /home/runner/.ssh/id_ed25519 -o StrictHostKeyChecking=no" --delete ./ Xumi@100.78.46.42:/home/Xumi/Digital-portfolio
-          ssh -i /home/runner/.ssh/id_ed25519 -o StrictHostKeyChecking=no Xumi@100.78.46.42 "cd /home/Xumi/Digital-portfolio && docker compose up -d --build"
+          # Use 'user' as the username since that's what your terminal shows
+          rsync -avz -e "ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=no" --delete ./ user@100.78.46.42:/home/user/Digital-portfolio
+          
+          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=no user@100.78.46.42 "cd /home/user/Digital-portfolio && docker compose up -d --build"
