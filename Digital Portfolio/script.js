@@ -53,47 +53,42 @@ toggleButtons.forEach(button => {
 
 initializeTheme();
 
-// --- Mobile Menu Toggle ---
-document.getElementById('mobile-menu-button').addEventListener('click', function() {
-    const menu = document.getElementById('mobile-menu');
-    menu.classList.toggle('hidden');
-});
-
-document.querySelectorAll('#mobile-menu a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.getElementById('mobile-menu').classList.add('hidden');
+// --- Mobile Menu Toggle (portfolio.php only) ---
+const mobileMenuBtn = document.getElementById('mobile-menu-button');
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', function() {
+        const menu = document.getElementById('mobile-menu');
+        menu.classList.toggle('hidden');
     });
-});
 
-// --- Academic Portfolio Accordion Logic ---
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+    });
+}
+
+// --- Academic Portfolio Accordion Logic (portfolio.php only) ---
 
 // Utility function to recursively update the maxHeight of parent accordion containers
 const updateParentHeights = (element) => {
     let current = element.parentElement;
     while (current) {
-        // Look for the parent accordion content containers
         if (current.classList.contains('year-content') || current.classList.contains('semester-content')) {
-            // Check if the parent is currently OPEN (i.e., its button's icon is rotated)
             const parentButton = document.querySelector(`[data-target="${current.id}"]`);
-            // Ensure parentButton exists and check if it's an accordion toggle (which is how we track open state)
             const isParentOpen = parentButton && parentButton.querySelector('.accordion-icon').classList.contains('rotated');
             
             if (isParentOpen) {
-                 // Recalculate height to accommodate the change in the child
                 const newHeight = current.scrollHeight;
-                // Only update if the height has changed significantly to avoid jitter
-                // Using clientHeight since maxHeight might be set to 'fit-content' (effectively auto)
                 if (Math.abs(current.clientHeight - newHeight) > 2) { 
                     current.style.maxHeight = newHeight + 'px';
                 }
             }
         }
-        // Stop walking up if we hit the main container or body
         if (current.id === 'portfolio-container' || current.tagName === 'BODY') break;
         current = current.parentElement;
     }
 };
-
 
 const handleAccordionToggle = (button) => {
     const targetId = button.getAttribute('data-target');
@@ -102,93 +97,175 @@ const handleAccordionToggle = (button) => {
     
     if (!targetContent || !icon) return;
 
-    // Check if the content is currently collapsed (uses the 'hidden' class from HTML initial state)
     const isOpening = targetContent.classList.contains('hidden');
 
     if (isOpening) {
-        // OPENING
-        
-        // 1. Make it visible so scrollHeight can be calculated
         targetContent.classList.remove('hidden'); 
         
         requestAnimationFrame(() => {
-            // 2. Set max-height and opacity to start the transition
-            // Set a very large max-height if the content will be dynamically resized after transition
-            // For nested structures, using scrollHeight is better before transition end
             targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
             targetContent.style.opacity = '1';
             icon.classList.add('rotated');
-            
-            // 3. Crucial: Recursively update parent heights to accommodate new size
             updateParentHeights(targetContent);
         });
         
-        // Optional: After transition, set maxHeight to 'fit-content' so the section can grow
-        // or shrink with content changes without triggering another transition.
         targetContent.addEventListener('transitionend', function handler() {
-            // Check if max-height is still what we set, indicating it finished opening
             if (targetContent.style.maxHeight !== '0px') { 
                 targetContent.style.maxHeight = 'fit-content';
             }
             targetContent.removeEventListener('transitionend', handler);
         }, { once: true });
 
-
     } else {
-        // CLOSING
-        // 1. Set max-height explicitly to current size before transitioning to 0
-        // We must read the actual height (scrollHeight) now, not 'fit-content' or a fixed pixel value
-        // that might be incorrect after content has been dynamic.
         targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
         
         requestAnimationFrame(() => {
-            // 2. Transition to collapse
             targetContent.style.maxHeight = '0';
             targetContent.style.opacity = '0';
             icon.classList.remove('rotated');
         });
 
-        // 3. Hide completely and update parent heights after the transition ends
         setTimeout(() => {
             targetContent.classList.add('hidden');
-            // Clean up inline styles after closing
             targetContent.style.removeProperty('max-height'); 
             targetContent.style.removeProperty('opacity');
-            // Crucial: Recursively update parent heights to accommodate lost size
             updateParentHeights(targetContent);
         }, ACCORDION_TRANSITION_DURATION + 50);
     }
 };
 
-
 document.querySelectorAll('.year-toggle, .semester-toggle, .period-toggle').forEach(button => {
     button.addEventListener('click', () => handleAccordionToggle(button));
 });
 
-
-// --- Simple Form Submission Handler (Non-functional without a backend) ---
+// --- Contact Form Handler (portfolio.php only) ---
 const contactForm = document.querySelector('#contact form');
-const statusMessage = document.getElementById('status-message');
-
-contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Clear previous styles and set processing message
-    statusMessage.textContent = 'Sending message...';
-    statusMessage.classList.remove('hidden', 'success-bg', 'success-text', 'error-bg', 'error-text');
-    statusMessage.classList.add('bg-secondary', 'text-accent');
-
-    setTimeout(() => {
-        // Simulate success
-        statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
-        statusMessage.classList.remove('bg-secondary', 'text-accent');
-        statusMessage.classList.add('success-bg', 'success-text');
+if (contactForm) {
+    const statusMessage = document.getElementById('status-message');
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        contactForm.reset();
+        statusMessage.textContent = 'Sending message...';
+        statusMessage.classList.remove('hidden', 'success-bg', 'success-text', 'error-bg', 'error-text');
+        statusMessage.classList.add('bg-secondary', 'text-accent');
 
         setTimeout(() => {
-            statusMessage.classList.add('hidden');
-        }, 5000);
+            statusMessage.textContent = 'Thank you! Your message has been sent successfully.';
+            statusMessage.classList.remove('bg-secondary', 'text-accent');
+            statusMessage.classList.add('success-bg', 'success-text');
+            
+            contactForm.reset();
 
-    }, 1500); 
-});
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 5000);
+
+        }, 1500); 
+    });
+}
+
+// =============================================================
+// --- Admin Dashboard Functions (admin_upload.php only) ---
+// CSRF_TOKEN is declared inline in admin_upload.php before this
+// script loads, making it available to these functions.
+// =============================================================
+
+function escapeHTML(str) {
+    if (str == null) return '';
+    return String(str).replace(/[&<>'"]/g, 
+        tag => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            "'": '&#39;',
+            '"': '&quot;'
+        }[tag])
+    );
+}
+
+function editFile(button) {
+    document.getElementById('edit_file_id').value = button.dataset.id;
+    document.getElementById('edit_title').value = button.dataset.title;
+    document.getElementById('edit_description').value = button.dataset.description;
+
+    // Clear all checkboxes
+    document.querySelectorAll('.edit-visitor-checkbox').forEach(cb => cb.checked = false);
+
+    // Check appropriate boxes based on visitor names
+    const visitors = button.dataset.visitors ? button.dataset.visitors.split(',') : [];
+    document.querySelectorAll('.edit-visitor-checkbox').forEach(cb => {
+        const label = cb.parentElement.textContent.trim();
+        if (visitors.some(v => label.includes(v.trim()))) {
+            cb.checked = true;
+        }
+    });
+
+    document.getElementById('editModal').classList.remove('hidden');
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').classList.add('hidden');
+}
+
+function openCommentsModal(fileId, comments) {
+    document.getElementById('comment_file_id').value = fileId;
+    const container = document.getElementById('commentsContainer');
+    container.innerHTML = '';
+
+    if (comments.length === 0) {
+        container.innerHTML = '<p class="text-gray-500 italic">No comments yet.</p>';
+    } else {
+        comments.forEach(c => {
+            const isClosed = c.status === 'Closed';
+            const bgClass = isClosed ? 'bg-gray-100' : 'bg-blue-50 border border-blue-100';
+            const closeBtn = !isClosed ? `
+                <form method="POST" class="inline">
+                    <input type="hidden" name="csrf_token" value="${escapeHTML(CSRF_TOKEN)}">
+                    <input type="hidden" name="comment_id" value="${c.id}">
+                    <button type="submit" name="close_comment" class="text-xs text-gray-500 hover:text-green-600 underline">Resolve</button>
+                </form>` : '<span class="text-xs text-green-600 font-medium">Resolved</span>';
+
+            container.innerHTML += `
+                <div class="p-3 rounded ${bgClass}">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="font-bold text-sm text-gray-800">${escapeHTML(c.username)}</span>
+                        <div class="flex space-x-2 items-center">
+                            <span class="text-xs text-gray-500">${c.created_at}</span>
+                            ${closeBtn}
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-700 ${isClosed ? 'opacity-70' : ''}">${escapeHTML(c.comment)}</p>
+                </div>
+            `;
+        });
+    }
+    document.getElementById('commentsModal').classList.remove('hidden');
+}
+
+function closeCommentsModal() {
+    document.getElementById('commentsModal').classList.add('hidden');
+}
+
+function openVersionsModal(fileId, versions) {
+    const container = document.getElementById('versionsContainer');
+    container.innerHTML = '';
+    
+    versions.forEach((v, index) => {
+        const isLatest = index === 0;
+        container.innerHTML += `
+            <div class="p-3 border rounded flex justify-between items-center ${isLatest ? 'bg-blue-50 border-blue-200' : 'bg-white'}">
+                <div>
+                    <span class="font-bold text-sm">Version ${v.version_number} ${isLatest ? '<span class="text-xs text-blue-600 font-normal">(Current)</span>' : ''}</span>
+                    <div class="text-xs text-gray-500">Uploaded by ${escapeHTML(v.username)} on ${v.created_at}</div>
+                </div>
+                <a href="${escapeHTML(v.file_path)}" target="_blank" class="text-sm text-blue-500 hover:underline">Download</a>
+            </div>
+        `;
+    });
+
+    document.getElementById('versionsModal').classList.remove('hidden');
+}
+
+function closeVersionsModal() {
+    document.getElementById('versionsModal').classList.add('hidden');
+}
