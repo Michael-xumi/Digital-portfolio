@@ -11,7 +11,8 @@ services:
   mysql:
     image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: your_password_here
+      MYSQL_ROOT_PASSWORD: qwerty
+      MYSQL_DATABASE: portfolio_db
     volumes:
       - mysqldata:/var/lib/mysql
 
