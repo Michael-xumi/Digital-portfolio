@@ -24,10 +24,7 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan 100.78.46.42 >> ~/.ssh/known_hosts
 
-     - name: Deploy to server
+      - name: Deploy to server
         run: |
-          # The -e flag tells rsync exactly which SSH key to use
-          rsync -avz -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no" --delete ./ Xumi@100.78.46.42:/home/Xumi/Digital-portfolio
-          
-          # Same for the docker command
-          ssh -i ~/.ssh/id_ed25519 Xumi@100.78.46.42 "cd /home/Xumi/Digital-portfolio && docker compose up -d --build"
+          rsync -avz -e "ssh -i /home/runner/.ssh/id_ed25519 -o StrictHostKeyChecking=no" --delete ./ Xumi@100.78.46.42:/home/Xumi/Digital-portfolio
+          ssh -i /home/runner/.ssh/id_ed25519 -o StrictHostKeyChecking=no Xumi@100.78.46.42 "cd /home/Xumi/Digital-portfolio && docker compose up -d --build"
